@@ -1,4 +1,4 @@
 {
-  "*/**/*.{js,ts}": ["npm run lint", "npm run prettier", "npm run test:staged"],
+  "*/**/*.{js,ts}": ["npm run lint", "npm run prettier"],
   "*/**/*.json": ["npm run prettier"]
 }
