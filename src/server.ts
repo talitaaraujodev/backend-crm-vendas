@@ -1,8 +1,10 @@
-import express from 'express'
+import 'reflect-metadata';
+import dotenv from 'dotenv';
+dotenv.config();
+import app from './App';
+import { agentsRoute } from './adapter/input/routes/agentsRoute';
+import { customersRoute } from './adapter/input/routes/customersRoute';
+import { AppDataSource } from './config/database/ormConfig';
 
-const PORT = 6005
-const app = express()
-
-app.listen(PORT, () => {
-  console.log(`Server is running on: http://localhost:${PORT}`)
-})
+AppDataSource.initialize();
+app.listen(Number(process.env.PORT), [agentsRoute, customersRoute]);
