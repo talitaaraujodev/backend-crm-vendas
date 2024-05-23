@@ -4,7 +4,7 @@
   "main": "src/server.ts",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/server.js",
+    "start": "node build/server.js",
     "start:dev": "tsnd --transpile-only --respawn --ignore-watch node_modules src/server.ts",
     "debug": "tsnd --files --transpile-only --respawn --ignore-watch node_modules --inspect=4321 --project tsconfig.json src/server.ts",
     "vercel-build": "npm run build",
