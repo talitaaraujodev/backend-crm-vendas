@@ -23,7 +23,7 @@ export class CustomerCreateYupValidator {
           address: yup.object().shape({
             zipcode: yup.string().required('CEP é um campo obrigatório.'),
             street: yup.string().required('Logradouro é um campo obrigatório.'),
-            number: yup.number().required('Número é um campo obrigatório.'),
+            number: yup.string().required('Número é um campo obrigatório.'),
             bairro: yup.string().required('Bairro é um campo obrigatório.'),
             city: yup.string().required('Cidade um campo obrigatório.'),
             complement: yup

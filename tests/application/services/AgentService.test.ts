@@ -10,8 +10,13 @@ import { BaseError } from '../../../src/helpers/errors/BaseError';
 import { NotFoundError } from '../../../src/helpers/errors/NotFoundError';
 
 describe('AgentService tests', () => {
-  const mockAgentPersistenceAdapter = createMock<AgentPersistenceOutputPort>();
-  const agentService = new AgentService(mockAgentPersistenceAdapter);
+  let mockAgentPersistenceAdapter: AgentPersistenceOutputPort;
+  let agentService: AgentService;
+
+  beforeEach(() => {
+    mockAgentPersistenceAdapter = createMock<AgentPersistenceOutputPort>();
+    agentService = new AgentService(mockAgentPersistenceAdapter);
+  });
 
   test('create_whenAgentInvalid_returnBadRequestError', async () => {
     expect(async () => {
