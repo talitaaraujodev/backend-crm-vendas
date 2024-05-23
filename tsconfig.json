@@ -1,17 +1,23 @@
 {
   "compilerOptions": {
-    "target": "ES2021",
-    "module": "commonjs",
-    "outDir": "./dist",
-    "rootDir": "./src",
+    "plugins": [
+      {
+        "transform": "ts-auto-mock/transformer",
+        "cacheBetweenTests": false
+      }
+    ],
+    "target": "ES2020",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
     "skipLibCheck": true,
+    "module": "commonjs",
+    "outDir": "./build",
+    "rootDir": "./src",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "types": ["jest"]
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true
   },
   "include": ["./src"],
-  "exclude": ["./node_modules", "./tests"]
+  "exclude": ["./tests", "./node_modules"]
 }

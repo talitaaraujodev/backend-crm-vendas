@@ -23,7 +23,7 @@ export class AgentPersistenceAdapter implements AgentPersistenceOutputPort {
     );
   }
 
-  async update(id: string, agent: Agent): Promise<Agent> {
+  async update(id: string, agent: Agent): Promise<void> {
     await this.agentRepository.update(
       { _id: new ObjectId(id) },
       {
@@ -32,8 +32,6 @@ export class AgentPersistenceAdapter implements AgentPersistenceOutputPort {
         updatedAt: new Date(),
       },
     );
-
-    return new Agent(agent.name, agent.status, id);
   }
 
   async delete(id: string): Promise<void> {
