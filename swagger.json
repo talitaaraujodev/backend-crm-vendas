@@ -1,0 +1,411 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API CRM de Vendas",
+    "description": "API para gerenciamento de clientes e agentes em um sistema de CRM de Vendas",
+    "contact": {
+      "name": "Support",
+      "email": "talitasantosdev@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:7000/api/v1"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Agents"
+    },
+    {
+      "name": "Customers"
+    }
+  ],
+  "paths": {
+    "/api/v1/agents": {
+      "post": {
+        "summary": "Cadastrar um novo agente",
+        "tags": ["Agents"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AgentInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Agente cadastrado com sucesso"
+          }
+        }
+      },
+      "get": {
+        "summary": "Obter todos os agentes",
+        "tags": ["Agents"],
+        "responses": {
+          "200": {
+            "description": "Lista de agentes retornada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Agent"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/agents/{id}": {
+      "get": {
+        "summary": "Obter detalhes de um agente específico",
+        "tags": ["Agents"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes do agente retornados com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Agent"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar um agente existente",
+        "tags": ["Agents"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AgentInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Agente atualizado com sucesso"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Excluir um agente existente",
+        "tags": ["Agents"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Agente excluído com sucesso"
+          }
+        }
+      }
+    },
+    "/api/v1/customers": {
+      "post": {
+        "summary": "Cadastrar um novo cliente",
+        "tags": ["Customers"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cliente cadastrado com sucesso"
+          }
+        }
+      },
+      "get": {
+        "summary": "Obter todos os clientes",
+        "tags": ["Customers"],
+        "responses": {
+          "200": {
+            "description": "Lista de clientes retornada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Customer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customers/{id}": {
+      "get": {
+        "summary": "Obter detalhes de um cliente específico",
+        "tags": ["Customers"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes do cliente retornados com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerInput"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar um cliente existente",
+        "tags": ["Customers"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerInputUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cliente atualizado com sucesso"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Excluir um cliente existente",
+        "tags": ["Customers"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cliente excluído com sucesso"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AgentInput": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": ["name"]
+      },
+      "Agent": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["ACTIVO", "INACTIVE"]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": ["name", "status", "createdAt"]
+      },
+      "CustomerInput": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "address": {
+            "$ref": "#/components/schemas/AddressInput"
+          }
+        },
+        "required": ["name", "email", "phone", "address", "status", "agentId"]
+      },
+      "AgentReference": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": ["id", "name"]
+      },
+      "Customer": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "address": {
+            "$ref": "#/components/schemas/AddressInput"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "WAITING_ATTENDANCE",
+              "IN_ATTENDANCE",
+              "PROPOSAL_MADE",
+              "NOT_CONCLUDED",
+              "SOLD"
+            ]
+          },
+          "agent": {
+            "$ref": "#/components/schemas/AgentReference"
+          },
+          "saleValue": {
+            "type": "number"
+          }
+        },
+        "required": ["name", "email", "phone", "address", "status", "agentId"]
+      },
+      "CustomerInputUpdate": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "WAITING_ATTENDANCE",
+              "IN_ATTENDANCE",
+              "PROPOSAL_MADE",
+              "NOT_CONCLUDED",
+              "SOLD"
+            ]
+          },
+          "agentId": {
+            "type": "string"
+          },
+          "saleValue": {
+            "type": "number"
+          }
+        },
+        "required": ["name", "email", "phone", "address", "status", "agentId"]
+      },
+      "AddressInput": {
+        "type": "object",
+        "properties": {
+          "zipcode": {
+            "type": "string"
+          },
+          "street": {
+            "type": "string"
+          },
+          "number": {
+            "type": "string"
+          },
+          "bairro": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "complement": {
+            "type": "string"
+          }
+        },
+        "required": ["zipcode", "street", "number", "bairro", "city"]
+      }
+    }
+  }
+}

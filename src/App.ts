@@ -1,6 +1,7 @@
 import express, { Router } from 'express';
+import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
-
+import swaggerDocument from '../swagger.json';
 export class App {
   private app: express.Application;
 
@@ -16,6 +17,11 @@ export class App {
 
   public listen(port: number, routes: Router[]): void {
     this.app.use(routes);
+    this.app.use(
+      '/api/v1/docs',
+      swaggerUi.serve,
+      swaggerUi.setup(swaggerDocument),
+    );
     this.app.listen(port, () => {
       console.log(`Server is running on: http://localhost:${port}`);
     });

@@ -18,33 +18,39 @@ container.register(InjectionKeys.AGENT_PERSISTENCE_OUTPUT_PORT, {
 const agentsRoute = Router();
 const agentController: AgentController = container.resolve('AgentController');
 
-agentsRoute.post('/v1/agents', async (request: Request, response: Response) => {
-  return await agentController.create(request, response);
-});
+agentsRoute.post(
+  '/api/v1/agents',
+  async (request: Request, response: Response) => {
+    return await agentController.create(request, response);
+  },
+);
 
 agentsRoute.put(
-  '/v1/agents/:id',
+  '/api/v1/agents/:id',
   async (request: Request, response: Response) => {
     return await agentController.update(request, response);
   },
 );
 
 agentsRoute.delete(
-  '/v1/agents/:id',
+  '/api/v1/agents/:id',
   async (request: Request, response: Response) => {
     return await agentController.delete(request, response);
   },
 );
 
 agentsRoute.get(
-  '/v1/agents/:id',
+  '/api/v1/agents/:id',
   async (request: Request, response: Response) => {
     return await agentController.findOne(request, response);
   },
 );
 
-agentsRoute.get('/v1/agents', async (request: Request, response: Response) => {
-  return await agentController.findAll(request, response);
-});
+agentsRoute.get(
+  '/api/v1/agents',
+  async (request: Request, response: Response) => {
+    return await agentController.findAll(request, response);
+  },
+);
 
 export { agentsRoute };

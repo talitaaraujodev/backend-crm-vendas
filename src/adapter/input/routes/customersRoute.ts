@@ -24,31 +24,31 @@ const customerController: CustomerController =
   container.resolve('CustomerController');
 
 customersRoute.post(
-  '/v1/customers',
+  '/api/v1/customers',
   async (request: Request, response: Response) => {
     return await customerController.create(request, response);
   },
 );
 customersRoute.put(
-  '/v1/customers/:id',
+  '/api/v1/customers/:id',
   async (request: Request, response: Response) => {
     return await customerController.update(request, response);
   },
 );
 customersRoute.delete(
-  '/v1/customers/:id',
+  '/api/v1/customers/:id',
   async (request: Request, response: Response) => {
     return await customerController.delete(request, response);
   },
 );
 customersRoute.get(
-  '/v1/customers/:id',
+  '/api/v1/customers/:id',
   async (request: Request, response: Response) => {
     return await customerController.findOne(request, response);
   },
 );
 customersRoute.get(
-  '/v1/customers',
+  '/api/v1/customers',
   async (request: Request, response: Response) => {
     return await customerController.findAll(request, response);
   },
