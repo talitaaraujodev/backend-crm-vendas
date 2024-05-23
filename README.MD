@@ -2,7 +2,7 @@
 
 # Desafio Técnico Backend - CRM Vendas
 
-Esse projeto faz parte do desafio técnico da empresa Fortes Tecnologia, e consiste API REST para gerenciamento de clientes e agentes em um sistema de CRM de Vendas
+Esse projeto faz parte do desafio técnico da empresa Intrasocial, e consiste API REST para gerenciamento de clientes e agentes em um sistema de CRM de Vendas
 
 </div>
 
