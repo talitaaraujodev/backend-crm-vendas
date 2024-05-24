@@ -88,17 +88,16 @@ export class CustomerPersistenceAdapter
       }),
     ) as Customer[];
   }
-  async findById(id: string): Promise<Customer | null> {
+  async findById(id: string): Promise<CustomerEntity | null> {
     const objectId = new ObjectId(id);
-    const customer = (await this.customerRepository.findOne({
+
+    return await this.customerRepository.findOne({
       where: { _id: objectId },
-    })) as Customer | null;
-    return customer;
+    });
   }
-  async findByEmail(email: string): Promise<Customer | null> {
-    const customer = (await this.customerRepository.findOne({
+  async findByEmail(email: string): Promise<CustomerEntity | null> {
+    return await this.customerRepository.findOne({
       where: { email: email },
-    })) as Customer | null;
-    return customer;
+    });
   }
 }

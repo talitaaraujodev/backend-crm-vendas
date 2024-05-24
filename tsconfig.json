@@ -17,8 +17,8 @@
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "resolveJsonModule": true,
+    "resolveJsonModule": true
   },
-  "include": ["./src"],
+  "include": ["./src", "swagger.json"],
   "exclude": ["./tests", "./node_modules"]
 }
