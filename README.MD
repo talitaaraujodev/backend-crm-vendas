@@ -12,7 +12,7 @@ Esse projeto faz parte do desafio técnico da empresa Intrasocial, e consiste AP
 - Ter o Docker instalado na sua máquina;
 - Crie um arquivo .env na raiz do projeto seguindo a estrutura do arquivo .env.example;
 
-## ⚙️ Como rodar o projeto localmente?
+## ⚙️ Rodando o projeto localmente
 
 1. Instalação dos pacotes
 
@@ -51,12 +51,30 @@ Execute o comando a seguir para iniciar os testes:
 npm run test
 ```
 
+## 🚀 Deploy da aplicação
+
+Acesse o seguinte link para acessar o deploy da aplicação:
+
+```bash
+https://backend-crm-vendas.vercel.app/api/v1
+```
+
 ## ✨ Documentação
 
 Acesse o seguinte link para acessar a documentação:
 
+**Localmente**
+
 ```bash
 http://localhost:7000/api/v1/docs
+```
+
+ou
+
+**Deploy**
+
+```bash
+https://backend-crm-vendas.vercel.app/api/v1/docs
 ```
 
 ## 🎯 Tecnologias Utilizadas
