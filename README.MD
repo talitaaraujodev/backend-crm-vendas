@@ -79,6 +79,7 @@ https://backend-crm-vendas.vercel.app/api/v1/docs
 
 ## 🎯 Tecnologias Utilizadas
 
+<p>
   <img style='margin: 5px;' src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E"/>
   <img style='margin: 5px;' src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white"/>
   <img style='margin: 5px;' src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white"/>
@@ -87,7 +88,7 @@ https://backend-crm-vendas.vercel.app/api/v1/docs
   <img style='margin: 5px;' src='https://img.shields.io/badge/Jest-323330?style=for-the-badge&logo=Jest&logoColor=white'/>
   <img style='margin: 5px;' src='https://img.shields.io/badge/-MongoDB-4DB33D?style=flat&logo=mongodb&logoColor=white'/>
   <img style='margin: 5px;' src='https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white'/>
-<
+  </p>
 
 <br><br>
 
