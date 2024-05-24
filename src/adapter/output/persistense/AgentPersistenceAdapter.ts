@@ -72,20 +72,16 @@ export class AgentPersistenceAdapter implements AgentPersistenceOutputPort {
     ) as Agent[];
   }
 
-  async findById(id: string): Promise<Agent | null> {
+  async findById(id: string): Promise<AgentEntity | null> {
     const objectId = new ObjectId(id);
-    const agent = (await this.agentRepository.findOne({
+    return (await this.agentRepository.findOne({
       where: { _id: objectId },
-    })) as Agent | null;
-
-    return agent;
+    })) as AgentEntity | null;
   }
 
-  async findByName(name: string): Promise<Agent | null> {
-    const agent = (await this.agentRepository.findOne({
+  async findByName(name: string): Promise<AgentEntity | null> {
+    return (await this.agentRepository.findOne({
       where: { name: name },
-    })) as Agent | null;
-
-    return agent;
+    })) as AgentEntity | null;
   }
 }

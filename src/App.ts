@@ -1,7 +1,7 @@
 import express, { Router } from 'express';
 import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
-import swaggerDocument from '../swagger.json';
+import swaggerDocument from './docs/swagger.json';
 export class App {
   private app: express.Application;
 

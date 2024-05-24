@@ -1,3 +1,4 @@
+import { AgentEntity } from '../../../adapter/output/persistense/entities/AgentEntity';
 import { Agent, AgentStatus } from '../../../application/domain/models/Agent';
 
 export interface AgentPersistenceOutputPort {
@@ -6,6 +7,6 @@ export interface AgentPersistenceOutputPort {
   delete(id: string): Promise<void>;
   findAll(): Promise<Agent[]>;
   findAllByStatus(status: AgentStatus): Promise<Agent[]>;
-  findById(id: string): Promise<Agent | null>;
-  findByName(name: string): Promise<Agent | null>;
+  findById(id: string): Promise<AgentEntity | null>;
+  findByName(name: string): Promise<AgentEntity | null>;
 }

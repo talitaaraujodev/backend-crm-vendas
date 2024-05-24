@@ -19,6 +19,6 @@
     "sourceMap": true,
     "resolveJsonModule": true
   },
-  "include": ["./src", "swagger.json"],
+  "include": ["./src"],
   "exclude": ["./tests", "./node_modules"]
 }
