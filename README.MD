@@ -6,10 +6,10 @@ Esse projeto faz parte do desafio técnico da empresa Intrasocial, e consiste AP
 
 </div>
 
-## 📋 Pré Requisitos
+## 💻 Pré Requisitos
 
-- Ter o Node ou Nvm instalado na sua máquina;
-- Ter o Docker instalado na sua máquina;
+- Ter o <a href="https://nodejs.org/en">Node</a> ou <a href="https://github.com/nvm-sh/nvm">NVM</a> instalado na sua máquina;
+- Ter o <a href="https://www.docker.com">Docker</a> instalado na sua máquina;
 - Crie um arquivo .env na raiz do projeto seguindo a estrutura do arquivo .env.example;
 
 ## ⚙️ Rodando o projeto localmente
@@ -79,7 +79,6 @@ https://backend-crm-vendas.vercel.app/api/v1/docs
 
 ## 🎯 Tecnologias Utilizadas
 
-<p>
   <img style='margin: 5px;' src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E"/>
   <img style='margin: 5px;' src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white"/>
   <img style='margin: 5px;' src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white"/>
@@ -88,7 +87,7 @@ https://backend-crm-vendas.vercel.app/api/v1/docs
   <img style='margin: 5px;' src='https://img.shields.io/badge/Jest-323330?style=for-the-badge&logo=Jest&logoColor=white'/>
   <img style='margin: 5px;' src='https://img.shields.io/badge/-MongoDB-4DB33D?style=flat&logo=mongodb&logoColor=white'/>
   <img style='margin: 5px;' src='https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white'/>
-</p>
+<
 
 <br><br>
 
