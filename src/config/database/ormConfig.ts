@@ -6,6 +6,7 @@ export const AppDataSource = new DataSource({
   type: 'mongodb',
   url: process.env.DATABASE_URL,
   entities: [AgentEntity, CustomerEntity],
+  useNewUrlParser: true,
   synchronize: true,
   logging: true,
 });

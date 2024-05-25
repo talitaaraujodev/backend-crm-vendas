@@ -51,7 +51,7 @@ Execute o comando a seguir para iniciar os testes:
 npm run test
 ```
 
-## 🚀 Deploy da aplicação
+## 🚀 Rodando o deploy da aplicação
 
 Acesse o seguinte link para acessar o deploy da aplicação:
 
@@ -76,6 +76,10 @@ ou
 ```bash
 https://backend-crm-vendas.vercel.app/api/v1/docs
 ```
+
+## 🤗 Conceitos utilizados
+
+- Arquitetura Hexagonal
 
 ## 🎯 Tecnologias Utilizadas
 
