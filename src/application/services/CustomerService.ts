@@ -11,7 +11,10 @@ import { CustomerCreateYupValidator } from '../../helpers/validators/CustomerCre
 import { NotFoundError } from '../../helpers/errors/NotFoundError';
 import { CustomerUpdateYupValidator } from '../../helpers/validators/CustomerUpdateValidator';
 import { Agent, AgentStatus } from '../domain/models/Agent';
-import { OutputListCustomerDto } from '../dto/CustomerDto';
+import {
+  OutputCustomerReportDto,
+  OutputListCustomerDto,
+} from '../dto/CustomerDto';
 
 @injectable()
 export class CustomerService implements CustomerServiceInputPort {
@@ -166,6 +169,58 @@ export class CustomerService implements CustomerServiceInputPort {
     await this.customerPersistence.delete(id);
   }
 
+  async generateReport(
+    startDate: string,
+    endDate: string,
+    statusCustomer: string,
+    agentId: string,
+  ): Promise<OutputCustomerReportDto[]> {
+    const query: any = {};
+
+    if (startDate && endDate) {
+      query.createdAt = {
+        $gte: new Date(startDate),
+        $lte: new Date(endDate),
+      };
+    }
+
+    if (statusCustomer) {
+      query.status = statusCustomer;
+    }
+
+    if (statusCustomer) {
+      query.status = statusCustomer;
+    }
+    if (agentId) {
+      query.agentId = agentId;
+    }
+
+    const customers = await this.customerPersistence.findAllByQuery(query);
+
+    const result = customers.map(async customer => {
+      const agent: any = await this.agentPersistence.findById(customer.agentId);
+      return {
+        id: customer.id,
+        name: customer.name,
+        email: customer.email,
+        phone: customer.phone,
+        address: customer.address,
+        status: customer.status,
+        saleValue: customer.saleValue,
+        agent: {
+          id: agent?._id.toString() || '',
+          name: agent?.name || '',
+        },
+        createdAt: agent.createdAt,
+        updatedAt: agent.updatedAt,
+      };
+    });
+
+    const listCustomers = await Promise.all(result);
+
+    return listCustomers;
+  }
+
   async findAll(): Promise<OutputListCustomerDto[]> {
     const customers = await this.customerPersistence.findAll();
 
@@ -184,6 +239,7 @@ export class CustomerService implements CustomerServiceInputPort {
           id: agent?._id.toString() || '',
           name: agent?.name || '',
         },
+        createdAt: agent.createdAt,
       };
     });
     const listCustomers = await Promise.all(result);

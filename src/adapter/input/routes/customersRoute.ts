@@ -23,6 +23,13 @@ const customersRoute = Router();
 const customerController: CustomerController =
   container.resolve('CustomerController');
 
+customersRoute.get(
+  '/api/v1/customers/report',
+  async (request: Request, response: Response) => {
+    return await customerController.generateReport(request, response);
+  },
+);
+
 customersRoute.post(
   '/api/v1/customers',
   async (request: Request, response: Response) => {

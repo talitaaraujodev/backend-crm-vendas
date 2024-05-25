@@ -116,4 +116,33 @@ export class CustomerController {
       return response.json(e).status(Constantes.httpStatus.ERROR_SERVER);
     }
   }
+
+  async generateReport(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    console.log('aqui....');
+    try {
+      const { startDate, endDate, agentId, status }: any = request.query;
+
+      const customers = await this.customerServiceInputPort.generateReport(
+        startDate,
+        endDate,
+        status,
+        agentId,
+      );
+      return response
+        .json({
+          customers,
+        })
+        .status(Constantes.httpStatus.OK);
+    } catch (e) {
+      if (e instanceof BaseError) {
+        return response
+          .status(e.code)
+          .json({ message: e.message, status: e.code, errors: e.errors });
+      }
+      return response.json(e).status(Constantes.httpStatus.ERROR_SERVER);
+    }
+  }
 }

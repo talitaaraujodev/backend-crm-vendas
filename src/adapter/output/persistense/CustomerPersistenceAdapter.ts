@@ -88,6 +88,9 @@ export class CustomerPersistenceAdapter
       }),
     ) as Customer[];
   }
+  async findAllByQuery(query: object): Promise<Customer[]> {
+    return await this.customerRepository.find({ where: query });
+  }
   async findById(id: string): Promise<CustomerEntity | null> {
     const objectId = new ObjectId(id);
 

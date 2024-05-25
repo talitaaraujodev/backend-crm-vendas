@@ -6,6 +6,7 @@ export interface CustomerPersistenceOutputPort {
   update(id: string, customer: Customer): Promise<void>;
   delete(id: string): Promise<void>;
   findAll(): Promise<Customer[]>;
+  findAllByQuery(query: object): Promise<Customer[]>;
   findById(id: string): Promise<CustomerEntity | null>;
   findByEmail(email: string): Promise<CustomerEntity | null>;
 }
