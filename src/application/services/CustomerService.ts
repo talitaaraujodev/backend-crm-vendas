@@ -197,7 +197,7 @@ export class CustomerService implements CustomerServiceInputPort {
 
     const customers = await this.customerPersistence.findAllByQuery(query);
 
-    const result = customers.map(async customer => {
+    const result = customers.map(async (customer: any) => {
       const agent: any = await this.agentPersistence.findById(customer.agentId);
       return {
         id: customer.id,
