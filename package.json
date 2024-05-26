@@ -57,7 +57,7 @@
     "mongodb": "^5.9.2",
     "prettier": "^3.2.5",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.0",
+    "swagger-ui-express": "^4.6.3",
     "typeorm": "^0.3.20",
     "yup": "^1.4.0"
   }

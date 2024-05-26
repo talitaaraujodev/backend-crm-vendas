@@ -199,7 +199,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CustomerInput"
+                  "$ref": "#/components/schemas/Customer"
                 }
               }
             }
@@ -254,6 +254,70 @@
           }
         }
       }
+    },
+    "/api/v1/customers/report": {
+      "get": {
+        "summary": "Gerar relatório de clientes",
+        "tags": ["Customers"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "startDate",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Data de início"
+          },
+          {
+            "in": "query",
+            "name": "endDate",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Data de término"
+          },
+          {
+            "in": "query",
+            "name": "agentId",
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID do agente associado"
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "WAITING_ATTENDANCE",
+                "IN_ATTENDANCE",
+                "PROPOSAL_MADE",
+                "NOT_CONCLUDED",
+                "SOLD"
+              ]
+            },
+            "description": "Status do cliente"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de clientes retornada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Customer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -275,7 +339,7 @@
           },
           "status": {
             "type": "string",
-            "enum": ["ACTIVO", "INACTIVE"]
+            "enum": ["ACTIVE", "INACTIVE"]
           },
           "createdAt": {
             "type": "string",
@@ -299,21 +363,25 @@
           },
           "address": {
             "$ref": "#/components/schemas/AddressInput"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "WAITING_ATTENDANCE",
+              "IN_ATTENDANCE",
+              "PROPOSAL_MADE",
+              "NOT_CONCLUDED",
+              "SOLD"
+            ]
+          },
+          "agentId": {
+            "type": "string"
+          },
+          "saleValue": {
+            "type": "number"
           }
         },
         "required": ["name", "email", "phone", "address", "status", "agentId"]
-      },
-      "AgentReference": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          }
-        },
-        "required": ["id", "name"]
       },
       "Customer": {
         "type": "object",
@@ -348,7 +416,7 @@
             "type": "number"
           }
         },
-        "required": ["name", "email", "phone", "address", "status", "agentId"]
+        "required": ["name", "email", "phone", "address", "status", "agent"]
       },
       "CustomerInputUpdate": {
         "type": "object",
@@ -362,6 +430,9 @@
           },
           "phone": {
             "type": "string"
+          },
+          "address": {
+            "$ref": "#/components/schemas/AddressInput"
           },
           "status": {
             "type": "string",
@@ -405,6 +476,18 @@
           }
         },
         "required": ["zipcode", "street", "number", "bairro", "city"]
+      },
+      "AgentReference": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": ["id", "name"]
       }
     }
   }
