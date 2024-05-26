@@ -6,5 +6,11 @@ import { agentsRoute } from './adapter/input/routes/agentsRoute';
 import { customersRoute } from './adapter/input/routes/customersRoute';
 import { AppDataSource } from './config/database/ormConfig';
 
-AppDataSource.initialize();
+AppDataSource.initialize()
+  .then(() => {
+    console.log('Data Source has been initialized!');
+  })
+  .catch(err => {
+    console.error('Error during Data Source initialization:', err);
+  });
 app.listen(Number(process.env.PORT), [agentsRoute, customersRoute]);

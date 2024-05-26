@@ -14,20 +14,5 @@ export interface OutputListCustomerDto {
     name: string;
   };
   createdAt: string;
-}
-
-export interface OutputCustomerReportDto {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  address: Address;
-  status: CustomerStatus;
-  saleValue: number;
-  agent: {
-    id: string;
-    name: string;
-  };
-  createdAt: string;
   updatedAt: string;
 }

@@ -121,7 +121,6 @@ export class CustomerController {
     request: Request,
     response: Response,
   ): Promise<Response> {
-    console.log('aqui....');
     try {
       const { startDate, endDate, agentId, status }: any = request.query;
 

@@ -11,10 +11,7 @@ import { CustomerCreateYupValidator } from '../../helpers/validators/CustomerCre
 import { NotFoundError } from '../../helpers/errors/NotFoundError';
 import { CustomerUpdateYupValidator } from '../../helpers/validators/CustomerUpdateValidator';
 import { Agent, AgentStatus } from '../domain/models/Agent';
-import {
-  OutputCustomerReportDto,
-  OutputListCustomerDto,
-} from '../dto/CustomerDto';
+import { OutputListCustomerDto } from '../dto/CustomerDto';
 
 @injectable()
 export class CustomerService implements CustomerServiceInputPort {
@@ -174,7 +171,7 @@ export class CustomerService implements CustomerServiceInputPort {
     endDate: string,
     statusCustomer: string,
     agentId: string,
-  ): Promise<OutputCustomerReportDto[]> {
+  ): Promise<OutputListCustomerDto[]> {
     const query: any = {};
 
     if (startDate && endDate) {
@@ -188,11 +185,12 @@ export class CustomerService implements CustomerServiceInputPort {
       query.status = statusCustomer;
     }
 
-    if (statusCustomer) {
-      query.status = statusCustomer;
-    }
     if (agentId) {
       query.agentId = agentId;
+    }
+
+    if (startDate && endDate && statusCustomer && agentId) {
+      return await this.findAll();
     }
 
     const customers = await this.customerPersistence.findAllByQuery(query);
@@ -240,6 +238,7 @@ export class CustomerService implements CustomerServiceInputPort {
           name: agent?.name || '',
         },
         createdAt: agent.createdAt,
+        updatedAt: agent.updatedAt,
       };
     });
     const listCustomers = await Promise.all(result);

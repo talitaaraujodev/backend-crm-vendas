@@ -1,8 +1,5 @@
 import { Customer } from '../../../application/domain/models/Customer';
-import {
-  OutputCustomerReportDto,
-  OutputListCustomerDto,
-} from '../../dto/CustomerDto';
+import { OutputListCustomerDto } from '../../dto/CustomerDto';
 
 export interface CustomerServiceInputPort {
   create(customer: Customer): Promise<Customer>;
@@ -14,6 +11,6 @@ export interface CustomerServiceInputPort {
     endDate: string,
     statusCustomer: string,
     agentId: string,
-  ): Promise<OutputCustomerReportDto[]>;
+  ): Promise<OutputListCustomerDto[]>;
   findAll(): Promise<OutputListCustomerDto[]>;
 }
