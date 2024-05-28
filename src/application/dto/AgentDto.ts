@@ -1,6 +1,7 @@
 export interface OutputCreateAgentDto {
   id: string;
   name: string;
+  email: string;
   status: string;
   createdAt: Date;
 }
@@ -8,6 +9,7 @@ export interface OutputCreateAgentDto {
 export interface OutputFindOneAgentDto {
   id: string;
   name: string;
+  email: string;
   status: string;
   createdAt: Date;
 }

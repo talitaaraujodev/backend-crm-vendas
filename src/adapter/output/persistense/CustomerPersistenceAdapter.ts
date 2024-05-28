@@ -67,27 +67,14 @@ export class CustomerPersistenceAdapter
     const objectId = new ObjectId(id);
     await this.customerRepository.delete({ _id: objectId });
   }
-  async findAll(): Promise<Customer[]> {
-    const customers = await this.customerRepository.find({
+  async findAll(): Promise<CustomerEntity[]> {
+    return await this.customerRepository.find({
       order: {
         createdAt: 'ASC',
       },
     });
-    return Object.assign(
-      customers.map(customer => {
-        return {
-          id: customer._id,
-          name: customer.name,
-          email: customer.email,
-          phone: customer.phone,
-          address: customer.address,
-          status: customer.status,
-          saleValue: customer.saleValue,
-          agentId: customer.agentId,
-        };
-      }),
-    ) as Customer[];
   }
+
   async findAllByQuery(query: object): Promise<CustomerEntity[]> {
     return await this.customerRepository.find({ where: query });
   }

@@ -9,4 +9,5 @@ export interface AgentPersistenceOutputPort {
   findAllByStatus(status: AgentStatus): Promise<Agent[]>;
   findById(id: string): Promise<AgentEntity | null>;
   findByName(name: string): Promise<AgentEntity | null>;
+  findByEmail(email: string): Promise<AgentEntity | null>;
 }

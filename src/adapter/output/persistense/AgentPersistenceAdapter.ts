@@ -12,6 +12,7 @@ export class AgentPersistenceAdapter implements AgentPersistenceOutputPort {
   async save(agent: Agent): Promise<Agent> {
     const agentEntitySaved: any = await this.agentRepository.save({
       _id: new ObjectId(),
+      email: agent.email,
       name: agent.name,
       status: agent.status,
     });
@@ -28,6 +29,7 @@ export class AgentPersistenceAdapter implements AgentPersistenceOutputPort {
       { _id: new ObjectId(id) },
       {
         name: agent.name,
+        email: agent.email,
         status: agent.status,
         updatedAt: new Date(),
       },
@@ -46,6 +48,7 @@ export class AgentPersistenceAdapter implements AgentPersistenceOutputPort {
         return {
           id: agent._id,
           name: agent.name,
+          email: agent.email,
           status: agent.status,
           createdAt: agent.createdAt,
         };
@@ -65,6 +68,7 @@ export class AgentPersistenceAdapter implements AgentPersistenceOutputPort {
         return {
           id: agentActive._id,
           name: agentActive.name,
+          email: agentActive.email,
           status: agentActive.status,
           createdAt: agentActive.createdAt,
         };
@@ -82,6 +86,11 @@ export class AgentPersistenceAdapter implements AgentPersistenceOutputPort {
   async findByName(name: string): Promise<AgentEntity | null> {
     return (await this.agentRepository.findOne({
       where: { name: name },
+    })) as AgentEntity | null;
+  }
+  async findByEmail(email: string): Promise<AgentEntity | null> {
+    return (await this.agentRepository.findOne({
+      where: { email: email },
     })) as AgentEntity | null;
   }
 }

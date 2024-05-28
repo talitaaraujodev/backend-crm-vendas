@@ -3,24 +3,20 @@ export enum AgentStatus {
   Inactive = 'INACTIVE',
 }
 export class Agent {
-  private _id: string | undefined;
-  private _name: string;
-  private _status: AgentStatus;
+  id: string | undefined;
+  name: string;
+  email: string;
+  status: AgentStatus;
 
-  constructor(name: string, status: AgentStatus, id?: string | undefined) {
-    this._id = id;
-    this._name = name;
-    this._status = status;
-  }
-  get id(): string | undefined {
-    return this._id;
-  }
-
-  get name(): string {
-    return this._name;
-  }
-
-  get status(): AgentStatus {
-    return this._status;
+  constructor(
+    name: string,
+    email: string,
+    status: AgentStatus,
+    id?: string | undefined,
+  ) {
+    this.id = id;
+    this.name = name;
+    this.email = email;
+    this.status = status;
   }
 }

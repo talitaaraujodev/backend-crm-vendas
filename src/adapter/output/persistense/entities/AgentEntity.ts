@@ -16,6 +16,9 @@ export class AgentEntity {
   @Column({ unique: true })
   name: string;
 
+  @Column({ unique: true })
+  email: string;
+
   @Column({ default: AgentStatus.Active })
   status: string;
 
@@ -32,12 +35,14 @@ export class AgentEntity {
   constructor(
     id: ObjectId,
     name: string,
+    email: string,
     status: string,
     createdAt?: Date | undefined,
     updatedAt?: Date | undefined,
   ) {
     this._id = id;
     this.name = name;
+    this.email = email;
     this.status = status;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;

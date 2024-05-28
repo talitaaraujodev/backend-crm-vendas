@@ -10,7 +10,7 @@ import { BaseError } from '../../../helpers/errors/BaseError';
 export class CustomerController {
   constructor(
     @inject(InjectionKeys.CUSTOMER_SERVICE_INPUT_PORT)
-    private customerServiceInputPort: CustomerServiceInputPort,
+    private readonly customerServiceInputPort: CustomerServiceInputPort,
   ) {}
 
   async create(request: Request, response: Response): Promise<Response> {
@@ -104,7 +104,7 @@ export class CustomerController {
 
       return response
         .json({
-          customers,
+          customers: customers ?? [],
         })
         .status(Constantes.httpStatus.OK);
     } catch (e) {

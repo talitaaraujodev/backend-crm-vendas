@@ -196,9 +196,9 @@ export class CustomerService implements CustomerServiceInputPort {
     const customers = await this.customerPersistence.findAllByQuery(query);
 
     const result = customers.map(async (customer: any) => {
-      const agent: any = await this.agentPersistence.findById(customer.agentId);
+      const agent = await this.agentPersistence.findById(customer.agentId);
       return {
-        id: customer.id,
+        id: customer._id.toString(),
         name: customer.name,
         email: customer.email,
         phone: customer.phone,
@@ -209,8 +209,8 @@ export class CustomerService implements CustomerServiceInputPort {
           id: agent?._id.toString() || '',
           name: agent?.name || '',
         },
-        createdAt: agent.createdAt,
-        updatedAt: agent.updatedAt,
+        createdAt: customer.createdAt,
+        updatedAt: customer.updatedAt,
       };
     });
 
@@ -223,10 +223,10 @@ export class CustomerService implements CustomerServiceInputPort {
     const customers = await this.customerPersistence.findAll();
 
     const result = customers.map(async (customer: any) => {
-      const agent: any = await this.agentPersistence.findById(customer.agentId);
+      const agent = await this.agentPersistence.findById(customer.agentId);
 
       return {
-        id: customer.id,
+        id: customer._id.toString(),
         name: customer.name,
         email: customer.email,
         phone: customer.phone,
@@ -237,8 +237,8 @@ export class CustomerService implements CustomerServiceInputPort {
           id: agent?._id.toString() || '',
           name: agent?.name || '',
         },
-        createdAt: agent.createdAt,
-        updatedAt: agent.updatedAt,
+        createdAt: customer.createdAt,
+        updatedAt: customer.updatedAt,
       };
     });
     const listCustomers = await Promise.all(result);

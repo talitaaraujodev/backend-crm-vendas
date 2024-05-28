@@ -10,7 +10,7 @@ import { BaseError } from '../../../helpers/errors/BaseError';
 export class AgentController {
   constructor(
     @inject(InjectionKeys.AGENT_SERVICE_INPUT_PORT)
-    private agentServiceInputPort: AgentServiceInputPort,
+    private readonly agentServiceInputPort: AgentServiceInputPort,
   ) {}
 
   async create(request: Request, response: Response): Promise<Response> {
@@ -102,7 +102,7 @@ export class AgentController {
 
       return response
         .json({
-          agents,
+          agents: agents ?? [],
         })
         .status(Constantes.httpStatus.OK);
     } catch (e) {

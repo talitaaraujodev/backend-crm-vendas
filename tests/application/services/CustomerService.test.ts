@@ -14,6 +14,8 @@ import {
   AgentStatus,
 } from '../../../src/application/domain/models/Agent';
 import { NotFoundError } from '../../../src/helpers/errors/NotFoundError';
+import { CustomerEntity } from '../../../src/adapter/output/persistense/entities/CustomerEntity';
+import { ObjectId } from 'mongodb';
 
 describe('CustomerService tests', () => {
   let mockAgentPersistenceAdapter: AgentPersistenceOutputPort;
@@ -77,7 +79,12 @@ describe('CustomerService tests', () => {
     mockAgentPersistenceAdapter.findAllByStatus = jest.fn(async () => {
       const agents = [
         {
-          agent: new Agent('Agent test update', AgentStatus.Inactive, '123'),
+          agent: new Agent(
+            'Agent test update',
+            'test@test.com.br',
+            AgentStatus.Inactive,
+            '123',
+          ),
         },
       ];
       return agents.map(({ agent }) => agent);
@@ -99,35 +106,37 @@ describe('CustomerService tests', () => {
   });
 
   test('findOne_whenCustomerValid_returnSuccess', async () => {
-    mockCustomerPersistenceAdapter.findById = jest.fn(
-      async () =>
-        new Customer(
-          'Customer test',
-          'test@gmail.com.br',
-          '85999999999',
-          new Address(
-            'zipcode_test',
-            'street_test',
-            'number_test',
-            'bairro_test',
-            'city_test',
-            'complement_test',
-          ),
-          CustomerStatus.WaitingAttendance,
-          '123',
-          0,
-          '123',
-        ),
+    const customer = new CustomerEntity(
+      new ObjectId(),
+      'Customer test',
+      'test@gmail.com.br',
+      '85999999999',
+      new Address(
+        'zipcode_test',
+        'street_test',
+        'number_test',
+        'bairro_test',
+        'city_test',
+        'complement_test',
+      ),
+      CustomerStatus.WaitingAttendance,
+      0,
+      new ObjectId(),
+    );
+    mockCustomerPersistenceAdapter.findById = jest.fn(async () => customer);
+
+    const finOneCustomer = await customerService.findOne(
+      customer._id.toString(),
     );
 
-    const createdCustomer = await customerService.findOne('123');
-
     expect(async () => {
-      createdCustomer;
+      finOneCustomer;
     }).not.toThrow(BaseError);
-    expect(createdCustomer.id).toEqual('123');
-    expect(createdCustomer.name).toEqual('Customer test');
-    expect(createdCustomer.email).toEqual('test@gmail.com.br');
+    expect(finOneCustomer.name).toEqual(customer.name);
+    expect(finOneCustomer.email).toEqual(customer.email);
+    expect(finOneCustomer.agentId.toString()).toEqual(
+      customer.agentId.toString(),
+    );
   });
 
   test('findOne_whenIdInvalid_returnNotFoundError', async () => {
@@ -139,7 +148,8 @@ describe('CustomerService tests', () => {
   });
 
   test('update_whenCustomerValid_returnSuccess', async () => {
-    const customer = new Customer(
+    const customer = new CustomerEntity(
+      new ObjectId(),
       'Customer test update',
       'test@gmail.com.br',
       '85999999999',
@@ -152,13 +162,24 @@ describe('CustomerService tests', () => {
         'complement_test',
       ),
       CustomerStatus.WaitingAttendance,
-      '123',
       0,
-      '123',
+      new ObjectId(),
     );
     mockCustomerPersistenceAdapter.findById = jest.fn(async () => customer);
 
-    const customerUpdated = await customerService.update('123', customer);
+    const customerUpdated = await customerService.update(
+      '123',
+      new Customer(
+        customer.name,
+        customer.email,
+        customer.phone,
+        customer.address as Address,
+        CustomerStatus.WaitingAttendance,
+        customer.agentId.toString(),
+        customer.saleValue,
+        customer._id.toString(),
+      ),
+    );
 
     expect(async () => {
       customerUpdated;
@@ -193,8 +214,9 @@ describe('CustomerService tests', () => {
   });
 
   test('delete_whenCustomerValid_returnSuccess', async () => {
-    const customer = new Customer(
-      'Customer test update',
+    const customer = new CustomerEntity(
+      new ObjectId(),
+      'Customer test delete',
       'test@gmail.com.br',
       '85999999999',
       new Address(
@@ -206,14 +228,13 @@ describe('CustomerService tests', () => {
         'complement_test',
       ),
       CustomerStatus.WaitingAttendance,
-      '123',
       0,
-      '123',
+      new ObjectId(),
     );
     mockCustomerPersistenceAdapter.findById = jest.fn(async () => customer);
 
     expect(async () => {
-      await customerService.delete('123');
+      await customerService.delete(customer._id.toString());
     }).not.toThrow(BaseError);
   });
 

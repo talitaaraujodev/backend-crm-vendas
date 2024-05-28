@@ -35,13 +35,24 @@ export class AgentService implements AgentServiceInputPort {
         'Agente já existente por nome.',
       );
     }
-    const agentCreated = new Agent(agent.name, AgentStatus.Active);
+
+    const emailExists = await this.agentPersistence.findByEmail(agent.email);
+
+    if (emailExists) {
+      throw new BadRequestError(
+        Constantes.httpMessages.BAD_REQUEST_ERROR,
+        'Agente já existente por e-mail.',
+      );
+    }
+
+    const agentCreated = new Agent(agent.name, agent.email, AgentStatus.Active);
 
     const agentSaved: any = await this.agentPersistence.save(agentCreated);
 
     return {
       id: agentSaved.id,
       name: agentSaved.name,
+      email: agentSaved.email,
       status: agentSaved.status,
       createdAt: agentSaved.createdAt,
     };
@@ -72,6 +83,7 @@ export class AgentService implements AgentServiceInputPort {
     return {
       id: agent.id,
       name: agent.name,
+      email: agent.email,
       status: agent.status,
       createdAt: agent.createdAt,
     };

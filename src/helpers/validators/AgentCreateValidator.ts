@@ -11,10 +11,15 @@ export class AgentCreateYupValidator {
             .string()
             .min(4, 'Nome deve ter pelo menos 4 caracteres.')
             .required('Nome é um campo obrigatório.'),
+          email: yup
+            .string()
+            .required('E-mail é um campo obrigatório.')
+            .email('E-mail com um formato inválido.'),
         })
         .validateSync(
           {
             name: agent.name,
+            email: agent.email,
           },
           {
             abortEarly: false,

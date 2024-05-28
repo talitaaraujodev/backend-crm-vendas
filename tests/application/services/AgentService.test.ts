@@ -8,6 +8,8 @@ import {
 import { BadRequestError } from '../../../src/helpers/errors/BadRequestError';
 import { BaseError } from '../../../src/helpers/errors/BaseError';
 import { NotFoundError } from '../../../src/helpers/errors/NotFoundError';
+import { AgentEntity } from '../../../src/adapter/output/persistense/entities/AgentEntity';
+import { ObjectId } from 'mongodb';
 
 describe('AgentService tests', () => {
   let mockAgentPersistenceAdapter: AgentPersistenceOutputPort;
@@ -25,16 +27,18 @@ describe('AgentService tests', () => {
   });
 
   test('create_whenAgentValid_returnSuccess', async () => {
-    mockAgentPersistenceAdapter.findByName = jest.fn(async () => null);
-    mockAgentPersistenceAdapter.save = jest.fn(
-      async () => new Agent(agent.name, AgentStatus.Active, '1'),
-    );
+    const agent = { name: 'Agent test', email: 'test@test.com.br' } as Agent;
 
-    const agent = { name: 'Agent test' } as Agent;
+    mockAgentPersistenceAdapter.findByName = jest.fn(async () => null);
+    mockAgentPersistenceAdapter.findByEmail = jest.fn(async () => null);
+    mockAgentPersistenceAdapter.save = jest.fn(
+      async () => new Agent(agent.name, agent.email, AgentStatus.Active, '1'),
+    );
 
     const createdAgent = await agentService.create(agent);
 
-    expect(createdAgent.name).toEqual('Agent test');
+    expect(createdAgent.name).toEqual(agent.name);
+    expect(createdAgent.email).toEqual(agent.email);
     expect(createdAgent.status).toEqual(AgentStatus.Active);
     expect(async () => {
       createdAgent;
@@ -42,18 +46,26 @@ describe('AgentService tests', () => {
   });
 
   test('findOne_whenAgentValid_returnSuccess', async () => {
-    mockAgentPersistenceAdapter.findById = jest.fn(
-      async () => new Agent('Agent test', AgentStatus.Active, '123'),
+    const agent = new AgentEntity(
+      new ObjectId(),
+      'Agent test',
+      'test@test.com.br',
+      AgentStatus.Active,
+      new Date(),
+      new Date(),
     );
+    mockAgentPersistenceAdapter.findById = jest.fn(async () => {
+      return agent;
+    });
 
-    const agent = await agentService.findOne('123');
+    const finOneAgent = await agentService.findOne(agent._id.toString());
 
     expect(async () => {
       agent;
     }).not.toThrow(BaseError);
-    expect(agent.name).toEqual('Agent test');
-    expect(agent.status).toEqual(AgentStatus.Active);
-    expect(agent.id).toEqual('123');
+    expect(finOneAgent.name).toEqual(agent.name);
+    expect(finOneAgent.email).toEqual(agent.email);
+    expect(finOneAgent.status).toEqual(AgentStatus.Active);
   });
 
   test('findOne_whenIdInvalid_returnNotFoundError', async () => {
@@ -65,15 +77,22 @@ describe('AgentService tests', () => {
   });
 
   test('update_whenAgentValid_returnSuccess', async () => {
-    mockAgentPersistenceAdapter.findById = jest.fn(
-      async () => new Agent('Agent test', AgentStatus.Active, '123'),
-    );
     const agent = {
+      id: new ObjectId(),
       name: 'Agent test update',
+      email: 'test@test.com.br',
       status: AgentStatus.Inactive,
-    } as Agent;
+    };
 
-    const agentUpdated = await agentService.update('123', agent);
+    mockAgentPersistenceAdapter.findById = jest.fn(
+      async () =>
+        new AgentEntity(agent.id, agent.name, agent.email, agent.status),
+    );
+
+    const agentUpdated = await agentService.update(
+      agent.id.toString(),
+      new Agent(agent.name, agent.email, agent.status, agent.id.toString()),
+    );
 
     expect(async () => {
       agentUpdated;
@@ -86,18 +105,30 @@ describe('AgentService tests', () => {
     expect(async () => {
       await agentService.update(
         '123',
-        new Agent('Agent test update', AgentStatus.Inactive),
+        new Agent(
+          'Agent test update',
+          'test@test.com.br',
+          AgentStatus.Inactive,
+        ),
       );
     }).rejects.toBeInstanceOf(NotFoundError);
   });
 
   test('delete_whenAgentValid_returnSuccess', async () => {
+    const agent = {
+      id: new ObjectId(),
+      name: 'Agent test',
+      email: 'test@test.com.br',
+      status: AgentStatus.Inactive,
+    };
+
     mockAgentPersistenceAdapter.findById = jest.fn(
-      async () => new Agent('Agent test', AgentStatus.Active, '123'),
+      async () =>
+        new AgentEntity(agent.id, agent.name, agent.email, agent.status),
     );
 
     expect(async () => {
-      await agentService.delete('123');
+      await agentService.delete(agent.id.toString());
     }).not.toThrow(BaseError);
   });
 
