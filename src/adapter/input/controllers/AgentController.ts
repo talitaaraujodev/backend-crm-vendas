@@ -26,8 +26,8 @@ export class AgentController {
     } catch (e) {
       if (e instanceof BaseError) {
         return response
-          .status(e.code)
-          .json({ message: e.message, status: e.code, errors: e.errors });
+          .status(e.statusCode)
+          .json({ message: e.message, status: e.statusCode, errors: e.errors });
       }
 
       return response.json(e).status(Constantes.httpStatus.ERROR_SERVER);
@@ -47,8 +47,8 @@ export class AgentController {
     } catch (e) {
       if (e instanceof BaseError) {
         return response
-          .status(e.code)
-          .json({ message: e.message, status: e.code, errors: e.errors });
+          .status(e.statusCode)
+          .json({ message: e.message, status: e.statusCode, errors: e.errors });
       }
       return response.json(e).status(Constantes.httpStatus.ERROR_SERVER);
     }
@@ -68,8 +68,8 @@ export class AgentController {
     } catch (e) {
       if (e instanceof BaseError) {
         return response
-          .status(e.code)
-          .json({ message: e.message, status: e.code, errors: e.errors });
+          .status(e.statusCode)
+          .json({ message: e.message, status: e.statusCode, errors: e.errors });
       }
       return response.json(e).status(Constantes.httpStatus.ERROR_SERVER);
     }
@@ -89,8 +89,8 @@ export class AgentController {
     } catch (e) {
       if (e instanceof BaseError) {
         return response
-          .status(e.code)
-          .json({ message: e.message, status: e.code, errors: e.errors });
+          .status(e.statusCode)
+          .json({ message: e.message, status: e.statusCode, errors: e.errors });
       }
       return response.json(e).status(Constantes.httpStatus.ERROR_SERVER);
     }
@@ -108,8 +108,8 @@ export class AgentController {
     } catch (e) {
       if (e instanceof BaseError) {
         return response
-          .status(e.code)
-          .json({ message: e.message, status: e.code, errors: e.errors });
+          .status(e.statusCode)
+          .json({ message: e.message, status: e.statusCode, errors: e.errors });
       }
       return response.json(e).status(Constantes.httpStatus.ERROR_SERVER);
     }

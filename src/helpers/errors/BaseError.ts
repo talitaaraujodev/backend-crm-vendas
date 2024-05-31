@@ -1,10 +1,10 @@
 export class BaseError {
-  public readonly code: number;
+  public readonly statusCode: number;
   public readonly message: string;
   public readonly errors?: any;
 
-  constructor(code: number, message: string, errors?: any) {
-    this.code = code;
+  constructor(statusCode: number, message: string, errors?: any) {
+    this.statusCode = statusCode;
     this.message = message;
     this.errors = errors;
   }
