@@ -1,9 +1,9 @@
 import express, { Router } from 'express';
 import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
-import swaggerDocument from './docs/swagger.json';
 import fs from 'fs';
 import path from 'path';
+import swaggerDocument from './docs/swagger.json';
 
 const css = fs.readFileSync(
   path.resolve(__dirname, '../node_modules/swagger-ui-dist/swagger-ui.css'),
