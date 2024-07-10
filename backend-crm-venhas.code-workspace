@@ -1,0 +1,29 @@
+{
+  "folders": [
+    {
+      "path": ".",
+    },
+  ],
+  "settings": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+  },
+  "launch": {
+    "version": "0.2.0",
+    "compounds": [],
+    "configurations": [
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Debug CRM Vendas",
+        "runtimeExecutable": "ts-node-dev",
+        "args": ["--respawn", "--transpile-only", "src/server.ts"],
+        "restart": true,
+        "program": "${workspaceFolder}/src/server.ts",
+        "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+        "skipFiles": ["<node_internals>/**"],
+        "sourceMaps": true,
+      },
+    ],
+  },
+}

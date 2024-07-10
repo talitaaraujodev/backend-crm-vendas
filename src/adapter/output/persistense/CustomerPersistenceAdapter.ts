@@ -67,11 +67,24 @@ export class CustomerPersistenceAdapter
     const objectId = new ObjectId(id);
     await this.customerRepository.delete({ _id: objectId });
   }
-  async findAll(): Promise<CustomerEntity[]> {
+  async findAll(search: string): Promise<CustomerEntity[]> {
+    let conditions = {};
+    if (search) {
+      conditions = {
+        $or: [
+          { name: { $regex: search, $options: 'i' } },
+          { email: { $regex: search, $options: 'i' } },
+          { phone: { $regex: search, $options: 'i' } },
+          { createdAt: { $regex: search, $options: 'i' } },
+          { status: { $regex: search, $options: 'i' } },
+        ],
+      };
+    }
     return await this.customerRepository.find({
       order: {
         createdAt: 'ASC',
       },
+      where: conditions,
     });
   }
 

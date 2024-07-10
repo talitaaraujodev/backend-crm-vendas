@@ -98,7 +98,8 @@ export class AgentController {
 
   async findAll(request: Request, response: Response): Promise<Response> {
     try {
-      const agents = await this.agentServiceInputPort.findAll();
+      const { search } = request.query;
+      const agents = await this.agentServiceInputPort.findAll(search as string);
 
       return response
         .json({

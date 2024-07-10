@@ -100,7 +100,10 @@ export class CustomerController {
 
   async findAll(request: Request, response: Response): Promise<Response> {
     try {
-      const customers = await this.customerServiceInputPort.findAll();
+      const { search } = request.query;
+      const customers = await this.customerServiceInputPort.findAll(
+        search as string,
+      );
 
       return response
         .json({

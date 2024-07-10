@@ -5,7 +5,7 @@ export interface AgentPersistenceOutputPort {
   save(agent: Agent): Promise<Agent>;
   update(id: string, agent: Agent): Promise<void>;
   delete(id: string): Promise<void>;
-  findAll(): Promise<Agent[]>;
+  findAll(search?: string): Promise<Agent[]>;
   findAllByStatus(status: AgentStatus): Promise<Agent[]>;
   findById(id: string): Promise<AgentEntity | null>;
   findByName(name: string): Promise<AgentEntity | null>;

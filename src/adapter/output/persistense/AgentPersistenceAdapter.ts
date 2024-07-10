@@ -41,8 +41,21 @@ export class AgentPersistenceAdapter implements AgentPersistenceOutputPort {
     await this.agentRepository.delete({ _id: objectId });
   }
 
-  async findAll(): Promise<Agent[]> {
-    const agents = await this.agentRepository.find();
+  async findAll(search: string): Promise<Agent[]> {
+    let conditions = {};
+    if (search) {
+      conditions = {
+        where: {
+          $or: [
+            { name: search },
+            { email: search },
+            { status: search },
+            { createdAt: search },
+          ],
+        },
+      };
+    }
+    const agents = await this.agentRepository.find(conditions);
     return Object.assign(
       agents.map(agent => {
         return {

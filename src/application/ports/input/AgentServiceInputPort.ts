@@ -9,5 +9,5 @@ export interface AgentServiceInputPort {
   update(id: string, agent: Agent): Promise<void>;
   findOne(id: string): Promise<OutputFindOneAgentDto>;
   delete(id: string): Promise<void>;
-  findAll(): Promise<Agent[]>;
+  findAll(search?: string): Promise<Agent[]>;
 }

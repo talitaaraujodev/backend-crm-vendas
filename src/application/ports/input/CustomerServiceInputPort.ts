@@ -12,5 +12,5 @@ export interface CustomerServiceInputPort {
     statusCustomer: string,
     agentId: string,
   ): Promise<OutputListCustomerDto[]>;
-  findAll(): Promise<OutputListCustomerDto[]>;
+  findAll(search?: string): Promise<OutputListCustomerDto[]>;
 }

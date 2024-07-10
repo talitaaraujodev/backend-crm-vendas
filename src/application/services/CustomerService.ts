@@ -219,8 +219,8 @@ export class CustomerService implements CustomerServiceInputPort {
     return listCustomers;
   }
 
-  async findAll(): Promise<OutputListCustomerDto[]> {
-    const customers = await this.customerPersistence.findAll();
+  async findAll(search?: string): Promise<OutputListCustomerDto[]> {
+    const customers = await this.customerPersistence.findAll(search);
 
     const result = customers.map(async (customer: any) => {
       const agent = await this.agentPersistence.findById(customer.agentId);
