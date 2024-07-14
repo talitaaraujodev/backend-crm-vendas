@@ -222,9 +222,7 @@ export class CustomerService implements CustomerServiceInputPort {
   async findAll(search?: string): Promise<OutputListCustomerDto[]> {
     const customers = await this.customerPersistence.findAll(search);
 
-    const result = customers.map(async (customer: any) => {
-      const agent = await this.agentPersistence.findById(customer.agentId);
-
+    const result = customers.map((customer: any) => {
       return {
         id: customer._id.toString(),
         name: customer.name,
@@ -233,16 +231,18 @@ export class CustomerService implements CustomerServiceInputPort {
         address: customer.address,
         status: customer.status,
         saleValue: customer.saleValue,
-        agent: {
-          id: agent?._id.toString() || '',
-          name: agent?.name || '',
-        },
+        agent:
+          customer.agentDetails && customer.agentDetails.length > 0
+            ? {
+                id: customer.agentDetails[0]._id.toString(),
+                name: customer.agentDetails[0].name,
+              }
+            : null,
         createdAt: customer.createdAt,
         updatedAt: customer.updatedAt,
       };
     });
-    const listCustomers = await Promise.all(result);
 
-    return listCustomers;
+    return result;
   }
 }

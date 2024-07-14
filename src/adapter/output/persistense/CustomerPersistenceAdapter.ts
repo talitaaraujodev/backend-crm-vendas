@@ -27,7 +27,7 @@ export class CustomerPersistenceAdapter
       },
       status: customer.status,
       saleValue: customer.saleValue,
-      agentId: customer.agentId,
+      agentId: new ObjectId(customer.agentId),
     });
 
     return new Customer(
@@ -68,26 +68,45 @@ export class CustomerPersistenceAdapter
     await this.customerRepository.delete({ _id: objectId });
   }
   async findAll(search: string): Promise<CustomerEntity[]> {
-    let conditions = {};
-    if (search) {
-      conditions = {
-        $or: [
-          { name: { $regex: search, $options: 'i' } },
-          { email: { $regex: search, $options: 'i' } },
-          { phone: { $regex: search, $options: 'i' } },
-          { createdAt: { $regex: search, $options: 'i' } },
-          { status: { $regex: search, $options: 'i' } },
-        ],
-      };
-    }
-    return await this.customerRepository.find({
-      order: {
-        createdAt: 'ASC',
-      },
-      where: conditions,
-    });
-  }
+    const customerCollection =
+      AppDataSource.mongoManager.getMongoRepository(CustomerEntity);
 
+    const pipeline: any[] = [
+      {
+        $lookup: {
+          from: 'agents',
+          localField: 'agentId',
+          foreignField: '_id',
+          as: 'agentDetails',
+        },
+      },
+    ];
+
+    if (search) {
+      const searchRegex = new RegExp(search, 'i');
+      pipeline.push({
+        $match: {
+          $or: [
+            { name: { $regex: searchRegex } },
+            { email: { $regex: searchRegex } },
+            { phone: { $regex: searchRegex } },
+            { status: { $regex: searchRegex } },
+            { 'agentDetails.name': { $regex: searchRegex } },
+          ],
+        },
+      });
+    }
+
+    pipeline.push({
+      $sort: {
+        createdAt: 1,
+      },
+    });
+
+    const customers = await customerCollection.aggregate(pipeline).toArray();
+
+    return customers;
+  }
   async findAllByQuery(query: object): Promise<CustomerEntity[]> {
     return await this.customerRepository.find({ where: query });
   }

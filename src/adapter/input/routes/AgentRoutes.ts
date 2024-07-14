@@ -12,25 +12,40 @@ export class AgentRoutes {
   }
 
   private initializeRoutes(): void {
-    this.router.post('/api/v1/agents', async (request: Request, response: Response) => {
-      await this.agentController.create(request, response);
-    });
+    this.router.post(
+      '/api/v1/agents',
+      async (request: Request, response: Response) => {
+        await this.agentController.create(request, response);
+      },
+    );
 
-    this.router.put('/api/v1/agents/:id', async (request: Request, response: Response) => {
-      await this.agentController.update(request, response);
-    });
+    this.router.put(
+      '/api/v1/agents/:id',
+      async (request: Request, response: Response) => {
+        await this.agentController.update(request, response);
+      },
+    );
 
-    this.router.delete('/api/v1/agents/:id', async (request: Request, response: Response) => {
-      await this.agentController.delete(request, response);
-    });
+    this.router.delete(
+      '/api/v1/agents/:id',
+      async (request: Request, response: Response) => {
+        await this.agentController.delete(request, response);
+      },
+    );
 
-    this.router.get('/api/v1/agents/:id', async (request: Request, response: Response) => {
-      await this.agentController.findOne(request, response);
-    });
+    this.router.get(
+      '/api/v1/agents/:id',
+      async (request: Request, response: Response) => {
+        await this.agentController.findOne(request, response);
+      },
+    );
 
-    this.router.get('/api/v1/agents', async (request: Request, response: Response) => {
-      await this.agentController.findAll(request, response);
-    });
+    this.router.get(
+      '/api/v1/agents',
+      async (request: Request, response: Response) => {
+        await this.agentController.findAll(request, response);
+      },
+    );
   }
 
   public getRouter(): Router {

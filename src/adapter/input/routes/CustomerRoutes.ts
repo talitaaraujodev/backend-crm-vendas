@@ -14,25 +14,40 @@ export class CustomerRoutes {
   }
 
   private initializeRoutes(): void {
-    this.router.post('/api/v1/customers', async (request: Request, response: Response) => {
-      await this.customerController.create(request, response);
-    });
+    this.router.post(
+      '/api/v1/customers',
+      async (request: Request, response: Response) => {
+        await this.customerController.create(request, response);
+      },
+    );
 
-    this.router.put('/api/v1/customers/:id', async (request: Request, response: Response) => {
-      await this.customerController.update(request, response);
-    });
+    this.router.put(
+      '/api/v1/customers/:id',
+      async (request: Request, response: Response) => {
+        await this.customerController.update(request, response);
+      },
+    );
 
-    this.router.delete('/api/v1/customers/:id', async (request: Request, response: Response) => {
-      await this.customerController.delete(request, response);
-    });
+    this.router.delete(
+      '/api/v1/customers/:id',
+      async (request: Request, response: Response) => {
+        await this.customerController.delete(request, response);
+      },
+    );
 
-    this.router.get('/api/v1/customers/:id', async (request: Request, response: Response) => {
-      await this.customerController.findOne(request, response);
-    });
+    this.router.get(
+      '/api/v1/customers/:id',
+      async (request: Request, response: Response) => {
+        await this.customerController.findOne(request, response);
+      },
+    );
 
-    this.router.get('/api/v1/customers', async (request: Request, response: Response) => {
-      await this.customerController.findAll(request, response);
-    });
+    this.router.get(
+      '/api/v1/customers',
+      async (request: Request, response: Response) => {
+        await this.customerController.findAll(request, response);
+      },
+    );
   }
 
   public getRouter(): Router {

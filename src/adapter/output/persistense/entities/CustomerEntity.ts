@@ -37,7 +37,7 @@ export class CustomerEntity {
   @Column({ type: 'float' })
   saleValue: number;
 
-  @Column({ type: 'uuid' })
+  @Column('objectId')
   agentId: ObjectId;
 
   @CreateDateColumn({
