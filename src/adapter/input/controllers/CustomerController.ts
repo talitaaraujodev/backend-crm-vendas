@@ -100,9 +100,11 @@ export class CustomerController {
 
   async findAll(request: Request, response: Response): Promise<Response> {
     try {
-      const { search } = request.query;
+      const { search, page, limit } = request.query;
       const customers = await this.customerServiceInputPort.findAll(
         search as string,
+        page as string,
+        limit as string,
       );
 
       return response

@@ -5,7 +5,11 @@ export interface CustomerPersistenceOutputPort {
   save(customer: Customer): Promise<Customer>;
   update(id: string, customer: Customer): Promise<void>;
   delete(id: string): Promise<void>;
-  findAll(search?: string): Promise<CustomerEntity[]>;
+  findAll(
+    search?: string,
+    page?: number,
+    limit?: number,
+  ): Promise<CustomerEntity[]>;
   findAllByQuery(query: object): Promise<CustomerEntity[]>;
   findById(id: string): Promise<CustomerEntity | null>;
   findByEmail(email: string): Promise<CustomerEntity | null>;

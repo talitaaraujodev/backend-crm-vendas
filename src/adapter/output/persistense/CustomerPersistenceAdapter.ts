@@ -67,7 +67,11 @@ export class CustomerPersistenceAdapter
     const objectId = new ObjectId(id);
     await this.customerRepository.delete({ _id: objectId });
   }
-  async findAll(search: string): Promise<CustomerEntity[]> {
+  async findAll(
+    search: string,
+    page: number = 1,
+    limit: number = 10,
+  ): Promise<CustomerEntity[]> {
     const customerCollection =
       AppDataSource.mongoManager.getMongoRepository(CustomerEntity);
 
@@ -102,6 +106,17 @@ export class CustomerPersistenceAdapter
         createdAt: 1,
       },
     });
+
+    if (page && limit) {
+      pipeline.push(
+        {
+          $skip: (page - 1) * limit,
+        },
+        {
+          $limit: limit,
+        },
+      );
+    }
 
     const customers = await customerCollection.aggregate(pipeline).toArray();
 

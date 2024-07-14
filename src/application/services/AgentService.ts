@@ -93,7 +93,15 @@ export class AgentService implements AgentServiceInputPort {
 
     return await this.agentPersistence.delete(id);
   }
-  async findAll(search: string): Promise<Agent[]> {
-    return await this.agentPersistence.findAll(search);
+  async findAll(
+    search?: string,
+    page?: string,
+    number?: string,
+  ): Promise<Agent[]> {
+    return await this.agentPersistence.findAll(
+      search,
+      Number(page),
+      Number(number),
+    );
   }
 }
