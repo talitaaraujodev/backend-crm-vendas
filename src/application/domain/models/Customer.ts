@@ -1,11 +1,11 @@
 import { Address } from './Address';
 
 export enum CustomerStatus {
-  WaitingAttendance = 'WAITING_ATTENDANCE',
-  InAttendance = 'IN_ATTENDANCE',
-  ProposalMade = 'PROPOSAL_MADE',
-  NotConcluded = 'NOT_CONCLUDED',
-  Sold = 'SOLD',
+  WaitingAttendance = 'Aguardando Atendimento',
+  InAttendance = 'Em Atendimento',
+  ProposalMade = 'Proposta Feita',
+  NotConcluded = 'Não Concluido',
+  Sold = 'Vendido',
 }
 export class Customer {
   id: string | undefined;

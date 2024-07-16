@@ -17,8 +17,8 @@ export class CustomerUpdateYupValidator {
             .email('E-mail com um formato inválido.'),
           phone: yup
             .string()
-            .min(11, 'Telefone deve ter pelo menos 11 caracteres.')
-            .max(11, 'Telefone deve ter no máximo 11 caracteres.')
+            .min(15, 'Telefone deve ter pelo menos 15 caracteres.')
+            .max(15, 'Telefone deve ter no máximo 15 caracteres.')
             .required('Telefone é um campo obrigatório.'),
           address: yup.object().shape({
             zipcode: yup.string().required('CEP é um campo obrigatório.'),

@@ -58,7 +58,7 @@ export class CustomerPersistenceAdapter
         },
         status: customer.status,
         saleValue: customer.saleValue,
-        agentId: customer.agentId,
+        agentId: new ObjectId(customer.agentId),
         updatedAt: new Date(),
       },
     );
@@ -93,7 +93,7 @@ export class CustomerPersistenceAdapter
           $or: [
             { name: { $regex: searchRegex } },
             { email: { $regex: searchRegex } },
-            { phone: { $regex: searchRegex } },
+            { phone: search },
             { status: { $regex: searchRegex } },
             { 'agentDetails.name': { $regex: searchRegex } },
           ],
