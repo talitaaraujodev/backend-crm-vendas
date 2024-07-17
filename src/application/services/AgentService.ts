@@ -96,12 +96,12 @@ export class AgentService implements AgentServiceInputPort {
   async findAll(
     search?: string,
     page?: string,
-    number?: string,
+    limit?: string,
   ): Promise<Agent[]> {
     return await this.agentPersistence.findAll(
       search,
       Number(page),
-      Number(number),
+      Number(limit),
     );
   }
 }

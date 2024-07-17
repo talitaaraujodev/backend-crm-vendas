@@ -101,27 +101,28 @@ export class CustomerPersistenceAdapter
       });
     }
 
+    // Adicionar ordenação
     pipeline.push({
       $sort: {
         createdAt: 1,
       },
     });
 
-    if (page && limit) {
-      pipeline.push(
-        {
-          $skip: (page - 1) * limit,
-        },
-        {
-          $limit: limit,
-        },
-      );
-    }
+    // Pipeline para contagem total e paginação
+    pipeline.push({
+      $facet: {
+        totalCount: [{ $count: 'total' }],
+        customers: [{ $skip: (page - 1) * limit }, { $limit: limit }],
+      },
+    });
 
-    const customers = await customerCollection.aggregate(pipeline).toArray();
+    const results: any = await customerCollection.aggregate(pipeline).toArray();
+    const customers = results[0]?.customers;
+    const total = results[0]?.totalCount[0]?.total || 0;
 
-    return customers;
+    return Object.assign({ customers, total }) as CustomerEntity[];
   }
+
   async findAllByQuery(query: object): Promise<CustomerEntity[]> {
     return await this.customerRepository.find({ where: query });
   }

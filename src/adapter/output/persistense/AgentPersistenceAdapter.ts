@@ -59,26 +59,27 @@ export class AgentPersistenceAdapter implements AgentPersistenceOutputPort {
         ],
       };
     }
-
     const skip = (page - 1) * limit;
 
-    const agents = await this.agentRepository.find({
+    const agentsData = await this.agentRepository.find({
       where: conditions,
       skip: skip,
       take: limit,
     });
 
-    return Object.assign(
-      agents.map(agent => {
-        return {
-          id: agent._id,
-          name: agent.name,
-          email: agent.email,
-          status: agent.status,
-          createdAt: agent.createdAt,
-        };
-      }),
-    ) as Agent[];
+    const total = await this.agentRepository.count();
+
+    const agents = agentsData.map(agent => {
+      return {
+        id: agent._id,
+        name: agent.name,
+        email: agent.email,
+        status: agent.status,
+        createdAt: agent.createdAt,
+      };
+    });
+
+    return { agents, total };
   }
 
   async findAllByStatus(status: AgentStatus): Promise<Agent[]> {

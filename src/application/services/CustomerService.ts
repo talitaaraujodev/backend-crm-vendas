@@ -224,13 +224,13 @@ export class CustomerService implements CustomerServiceInputPort {
     page?: string,
     limit?: string,
   ): Promise<OutputListCustomerDto[]> {
-    const customers = await this.customerPersistence.findAll(
+    const customersData: any = await this.customerPersistence.findAll(
       search,
       Number(page),
       Number(limit),
     );
 
-    const result = customers.map((customer: any) => {
+    const customers = customersData?.customers.map((customer: any) => {
       return {
         id: customer._id.toString(),
         name: customer.name,
@@ -251,6 +251,6 @@ export class CustomerService implements CustomerServiceInputPort {
       };
     });
 
-    return result;
+    return { customers, total: customersData.total };
   }
 }
