@@ -28,9 +28,10 @@ export class CustomerService implements CustomerServiceInputPort {
     );
     await this.verifyCustomerIsValid(customer, agentsActives);
 
-    const customers = await this.customerPersistence.findAll();
+    const customersData: any = await this.customerPersistence.findAll();
     let indexNextAgent = 0;
 
+    const customers = customersData.customers;
     if (customers.length > 0) {
       const lastCustomer = customers[customers.length - 1];
 
