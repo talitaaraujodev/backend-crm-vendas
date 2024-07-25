@@ -48,6 +48,12 @@ export class CustomerRoutes {
         await this.customerController.findAll(request, response);
       },
     );
+    this.router.get(
+      '/api/v1/customers/generate/report',
+      async (request: Request, response: Response) => {
+        await this.customerController.generateReport(request, response);
+      },
+    );
   }
 
   public getRouter(): Router {

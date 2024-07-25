@@ -1,4 +1,5 @@
 import { inject, injectable } from 'tsyringe';
+import { ObjectId } from 'mongodb';
 import { InjectionKeys } from '../InjectionKeys';
 import { Constantes } from '../Constantes';
 import { CustomerPersistenceOutputPort } from '../../application/ports/output/CustomerPersistenceOutputPort';
@@ -176,9 +177,12 @@ export class CustomerService implements CustomerServiceInputPort {
     const query: any = {};
 
     if (startDate && endDate) {
+      const start = new Date(`${startDate}T00:00:00.000Z`);
+      const end = new Date(`${endDate}T23:59:59.999Z`);
+
       query.createdAt = {
-        $gte: new Date(startDate),
-        $lte: new Date(endDate),
+        $gte: start,
+        $lte: end,
       };
     }
 
@@ -187,7 +191,7 @@ export class CustomerService implements CustomerServiceInputPort {
     }
 
     if (agentId) {
-      query.agentId = agentId;
+      query.agentId = new ObjectId(agentId);
     }
 
     if (startDate && endDate && statusCustomer && agentId) {
@@ -196,26 +200,21 @@ export class CustomerService implements CustomerServiceInputPort {
 
     const customers = await this.customerPersistence.findAllByQuery(query);
 
-    const result = customers.map(async (customer: any) => {
-      const agent = await this.agentPersistence.findById(customer.agentId);
-      return {
-        id: customer._id.toString(),
-        name: customer.name,
-        email: customer.email,
-        phone: customer.phone,
-        address: customer.address,
-        status: customer.status,
-        saleValue: customer.saleValue,
-        agent: {
-          id: agent?._id.toString() || '',
-          name: agent?.name || '',
-        },
-        createdAt: customer.createdAt,
-        updatedAt: customer.updatedAt,
-      };
-    });
-
-    const listCustomers = await Promise.all(result);
+    const listCustomers = customers.map((customer: any) => ({
+      id: customer._id.toString(),
+      name: customer.name,
+      email: customer.email,
+      phone: customer.phone,
+      address: customer.address,
+      status: customer.status,
+      saleValue: customer.saleValue,
+      agent: {
+        id: customer.agentDetails?._id.toString() || '',
+        name: customer.agentDetails?.name || '',
+      },
+      createdAt: customer.createdAt,
+      updatedAt: customer.updatedAt,
+    }));
 
     return listCustomers;
   }

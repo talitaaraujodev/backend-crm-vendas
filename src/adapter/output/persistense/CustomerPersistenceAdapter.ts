@@ -101,14 +101,12 @@ export class CustomerPersistenceAdapter
       });
     }
 
-    // Adicionar ordenação
     pipeline.push({
       $sort: {
         createdAt: 1,
       },
     });
 
-    // Pipeline para contagem total e paginação
     pipeline.push({
       $facet: {
         totalCount: [{ $count: 'total' }],
@@ -124,7 +122,28 @@ export class CustomerPersistenceAdapter
   }
 
   async findAllByQuery(query: object): Promise<CustomerEntity[]> {
-    return await this.customerRepository.find({ where: query });
+    const customerCollection =
+      AppDataSource.mongoManager.getMongoRepository(CustomerEntity);
+
+    const pipeline: any[] = [
+      { $match: query },
+      {
+        $lookup: {
+          from: 'agents',
+          localField: 'agentId',
+          foreignField: '_id',
+          as: 'agentDetails',
+        },
+      },
+      {
+        $unwind: {
+          path: '$agentDetails',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+    ];
+
+    return await customerCollection.aggregate(pipeline).toArray();
   }
   async findById(id: string): Promise<CustomerEntity | null> {
     const objectId = new ObjectId(id);

@@ -255,7 +255,7 @@
         }
       }
     },
-    "/api/v1/customers/report": {
+    "/api/v1/customers/generate/report": {
       "get": {
         "summary": "Gerar relatório de clientes",
         "tags": ["Customers"],
