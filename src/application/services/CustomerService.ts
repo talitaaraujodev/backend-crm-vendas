@@ -173,7 +173,7 @@ export class CustomerService implements CustomerServiceInputPort {
     endDate: string,
     statusCustomer: string,
     agentId: string,
-  ): Promise<OutputListCustomerDto[]> {
+  ): Promise<OutputListCustomerDto> {
     const query: any = {};
 
     if (startDate && endDate) {
@@ -200,7 +200,7 @@ export class CustomerService implements CustomerServiceInputPort {
 
     const customers = await this.customerPersistence.findAllByQuery(query);
 
-    const listCustomers = customers.map((customer: any) => ({
+    const listCustomers: any = customers.map((customer: any) => ({
       id: customer._id.toString(),
       name: customer.name,
       email: customer.email,
@@ -223,14 +223,14 @@ export class CustomerService implements CustomerServiceInputPort {
     search?: string,
     page?: string,
     limit?: string,
-  ): Promise<OutputListCustomerDto[]> {
+  ): Promise<OutputListCustomerDto> {
     const customersData: any = await this.customerPersistence.findAll(
       search,
       Number(page),
       Number(limit),
     );
 
-    const customers = customersData?.customers.map((customer: any) => {
+    const customers: any = customersData?.customers.map((customer: any) => {
       return {
         id: customer._id.toString(),
         name: customer.name,
@@ -251,6 +251,6 @@ export class CustomerService implements CustomerServiceInputPort {
       };
     });
 
-    return { customers, total: customersData.total };
+    return { customers: customers, total: customersData.total };
   }
 }

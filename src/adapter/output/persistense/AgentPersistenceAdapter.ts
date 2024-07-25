@@ -45,7 +45,7 @@ export class AgentPersistenceAdapter implements AgentPersistenceOutputPort {
     search: string,
     page: number = 1,
     limit: number = 10,
-  ): Promise<Agent[]> {
+  ): Promise<any> {
     let conditions = {};
     const searchRegex = new RegExp(search, 'i');
 

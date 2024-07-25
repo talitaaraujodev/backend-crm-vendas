@@ -1,7 +1,7 @@
 import { Address } from '../domain/models/Address';
 import { CustomerStatus } from '../domain/models/Customer';
 
-export interface OutputListCustomerDto {
+export interface ListCustomerDto {
   id: string;
   name: string;
   email: string;
@@ -15,4 +15,9 @@ export interface OutputListCustomerDto {
   } | null;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface OutputListCustomerDto {
+  customers: ListCustomerDto[];
+  total: number;
 }

@@ -11,10 +11,10 @@ export interface CustomerServiceInputPort {
     endDate: string,
     statusCustomer: string,
     agentId: string,
-  ): Promise<OutputListCustomerDto[]>;
+  ): Promise<OutputListCustomerDto>;
   findAll(
     search?: string,
     page?: string,
     limit?: string,
-  ): Promise<OutputListCustomerDto[]>;
+  ): Promise<OutputListCustomerDto>;
 }
