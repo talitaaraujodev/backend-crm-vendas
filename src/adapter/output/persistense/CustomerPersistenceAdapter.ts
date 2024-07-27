@@ -107,10 +107,14 @@ export class CustomerPersistenceAdapter
       },
     });
 
+    page = Number.isInteger(page) && page > 0 ? page : 1;
+    limit = Number.isInteger(limit) && limit > 0 ? limit : 10;
+    const skip = (page - 1) * limit;
+
     pipeline.push({
       $facet: {
         totalCount: [{ $count: 'total' }],
-        customers: [{ $skip: (page - 1) * limit }, { $limit: limit }],
+        customers: [{ $skip: skip }, { $limit: limit }],
       },
     });
 
